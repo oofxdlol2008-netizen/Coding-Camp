@@ -8,8 +8,8 @@ The implementation follows the architecture defined in the design document: a ze
 
 ## Tasks
 
-- [ ] 1. Scaffold project structure and HTML shell
-  - [ ] 1.1 Create `index.html` with semantic layout
+- [x] 1. Scaffold project structure and HTML shell
+  - [x] 1.1 Create `index.html` with semantic layout
     - Create `index.html` at the workspace root with `<!DOCTYPE html>`, `<html>`, `<head>`, `<body>`
     - Add a `<link>` tag referencing `css/style.css` using a relative path
     - Add a `<script>` tag (deferred, at end of `<body>`) referencing `js/app.js` using a relative path
@@ -17,7 +17,7 @@ The implementation follows the architecture defined in the design document: a ze
     - Add placeholder `<section>` elements for each of the five widgets: `#greeting`, `#timer`, `#todo`, `#links`, `#theme-toggle`
     - _Requirements: 7.1, 7.2, 7.3, 5.4_
 
-  - [ ] 1.2 Create `css/style.css` with CSS custom properties for theming
+  - [x] 1.2 Create `css/style.css` with CSS custom properties for theming
     - Create `css/style.css`
     - Define `:root` CSS custom properties for the light theme (`--bg`, `--surface`, `--text`, `--accent`, etc.)
     - Define `[data-theme="dark"]` overrides for each custom property
@@ -25,14 +25,14 @@ The implementation follows the architecture defined in the design document: a ze
     - Add utility classes for `.strikethrough`, `.hidden`, `.toast`, `.inline-error`
     - _Requirements: 5.1, 5.2, 7.1, 7.2_
 
-  - [ ] 1.3 Create `js/app.js` with module skeleton and `DOMContentLoaded` bootstrap
+  - [x] 1.3 Create `js/app.js` with module skeleton and `DOMContentLoaded` bootstrap
     - Create `js/app.js`
     - Declare empty namespace objects: `Storage`, `Greeting`, `Timer`, `TodoList`, `QuickLinks`, `Theme`
     - Add a `DOMContentLoaded` listener that calls each module's `init()` in the order specified in the design: `Theme.init()`, `Greeting.init()`, `Timer.init()`, `TodoList.init()`, `QuickLinks.init()`
     - _Requirements: 7.1, 7.3, 6.1_
 
-- [ ] 2. Implement `Storage` module
-  - [ ] 2.1 Implement `Storage.KEYS`, `Storage.read()`, and `Storage.write()`
+- [x] 2. Implement `Storage` module
+  - [x] 2.1 Implement `Storage.KEYS`, `Storage.read()`, and `Storage.write()`
     - Define `Storage.KEYS = { THEME: 'dashboard_theme', USER_NAME: 'dashboard_name', TODOS: 'dashboard_todos', LINKS: 'dashboard_links' }`
     - Implement `Storage.read(key)`: wrap `localStorage.getItem` + `JSON.parse` in `try/catch`; return `null` on any error (missing key, malformed JSON, `SecurityError`)
     - Implement `Storage.write(key, value)`: wrap `JSON.stringify` + `localStorage.setItem` in `try/catch`; return `true` on success, `false` on failure (catches `QuotaExceededError`, `SecurityError`)
@@ -46,8 +46,8 @@ The implementation follows the architecture defined in the design document: a ze
     - Tag comment: `// Feature: personal-dashboard, Property 1: Storage round-trip preserves data`
     - **Validates: Requirements 3.11, 3.12, 4.5, 4.6, 5.3, 5.4, 6.1, 6.5**
 
-- [ ] 3. Implement `Greeting` module pure functions
-  - [ ] 3.1 Implement `Greeting.getGreetingText()`, `Greeting.formatTime()`, `Greeting.formatDate()`, `Greeting.validateName()`
+- [x] 3. Implement `Greeting` module pure functions
+  - [x] 3.1 Implement `Greeting.getGreetingText()`, `Greeting.formatTime()`, `Greeting.formatDate()`, `Greeting.validateName()`
     - Implement `getGreetingText(hour)`: return one of the four greeting strings based on the time-of-day bands (5–11 → morning, 12–17 → afternoon, 18–21 → evening, 22–23/0–4 → night)
     - Implement `formatTime(date)`: return `"HH:MM:SS"` string using zero-padded hours, minutes, seconds from the `Date` object
     - Implement `formatDate(date)`: return `"Weekday, Month DD, YYYY"` using `Intl.DateTimeFormat` or a manual lookup table
@@ -68,16 +68,16 @@ The implementation follows the architecture defined in the design document: a ze
     - Tag comment: `// Feature: personal-dashboard, Property 8: Name validation is consistent with length constraints`
     - **Validates: Requirements 1.9, 1.10**
 
-- [ ] 4. Implement `Greeting` module DOM and `init()`
-  - [ ] 4.1 Implement `Greeting.init()` with clock tick, name display, and name edit
+- [x] 4. Implement `Greeting` module DOM and `init()`
+  - [x] 4.1 Implement `Greeting.init()` with clock tick, name display, and name edit
     - Add DOM markup inside `#greeting`: `<div id="clock">`, `<div id="date">`, `<h1 id="greeting-text">`, `<div id="name-form">` (input + submit button + inline error span)
     - Implement `Greeting.init()`: call `Storage.read(KEYS.USER_NAME)` to hydrate name; start a `setInterval` (1 000 ms) that calls `formatTime` + `formatDate` + `getGreetingText` and updates the DOM elements each tick; immediately invoke the tick once on init
     - Wire name-submit button: call `validateName`; on failure display inline error; on success call `Storage.write` and update the displayed greeting
     - Display a `Storage` failure banner (reuse `.inline-error`) if `Storage.write` returns `false`
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 1.10_
 
-- [ ] 5. Implement `Timer` module
-  - [ ] 5.1 Implement `Timer.formatDisplay()` pure function
+- [x] 5. Implement `Timer` module
+  - [x] 5.1 Implement `Timer.formatDisplay()` pure function
     - Implement `Timer.formatDisplay(totalSeconds)`: convert `totalSeconds` to `MM:SS` with zero-padding for both fields; `Math.floor(totalSeconds / 60)` for minutes, `totalSeconds % 60` for seconds
     - _Requirements: 2.3_
 
@@ -88,7 +88,7 @@ The implementation follows the architecture defined in the design document: a ze
     - Tag comment: `// Feature: personal-dashboard, Property 7: Timer display format is always MM:SS`
     - **Validates: Requirements 2.3**
 
-  - [ ] 5.3 Implement `Timer.init()`, `start()`, `stop()`, `reset()`, `onComplete()`
+  - [x] 5.3 Implement `Timer.init()`, `start()`, `stop()`, `reset()`, `onComplete()`
     - Add DOM markup inside `#timer`: `<div id="timer-display">`, `<button id="timer-start">`, `<button id="timer-stop">`, `<button id="timer-reset">`, `<div id="timer-notification" class="hidden">`
     - Implement `Timer.state = { remaining: 1500, running: false }` and `_intervalId = null`
     - Implement `start()`: no-op if `state.running`; set `state.running = true`; start `setInterval` (1 000 ms) decrementing `state.remaining`; call `onComplete()` when `remaining` hits 0; update button enabled/disabled states and display after each tick
@@ -98,11 +98,11 @@ The implementation follows the architecture defined in the design document: a ze
     - Implement `init()`: render `formatDisplay(1500)`; bind button events; set initial button states
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10_
 
-- [ ] 6. Checkpoint — Greeting and Timer
+- [x] 6. Checkpoint — Greeting and Timer
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 7. Implement `TodoList` module pure functions
-  - [ ] 7.1 Implement `TodoList.validateDescription()`, `createItem()`, and `sortItems()`
+- [x] 7. Implement `TodoList` module pure functions
+  - [x] 7.1 Implement `TodoList.validateDescription()`, `createItem()`, and `sortItems()`
     - Implement `validateDescription(raw)`: return `{ valid: true }` if `raw.trim().length` is 1–280; otherwise `{ valid: false, reason: '...' }`
     - Implement `createItem(description)`: return a `TodoItem` object `{ id: crypto.randomUUID() || Date.now().toString(), description: description.trim(), completed: false, insertionIndex: <monotonically increasing counter> }`
     - Implement `sortItems(items, mode)`: return a new array (never mutate); for `'default'` sort ascending by `insertionIndex`; for `'active'` put incomplete items first (preserving their relative `insertionIndex` order), then completed; for `'completed'` reverse the group order
@@ -130,8 +130,8 @@ The implementation follows the architecture defined in the design document: a ze
     - Tag comment: `// Feature: personal-dashboard, Property 5: Todo sort stability`
     - **Validates: Requirements 3.10**
 
-- [ ] 8. Implement `TodoList` module DOM and `init()`
-  - [ ] 8.1 Implement `TodoList.init()`, CRUD operations, and storage flush
+- [x] 8. Implement `TodoList` module DOM and `init()`
+  - [x] 8.1 Implement `TodoList.init()`, CRUD operations, and storage flush
     - Add DOM markup inside `#todo`: `<input id="todo-input">`, `<button id="todo-add">`, `<span id="todo-error">`, `<select id="todo-sort">` (options: default, active, completed), `<ul id="todo-list">`
     - Implement `TodoList.state = { items: [], sortMode: 'default' }` and `_insertionCounter = 0`
     - Implement `addItem(description)`: validate; create item; push to `state.items`; flush to `Storage`; re-render list
@@ -143,8 +143,8 @@ The implementation follows the architecture defined in the design document: a ze
     - Display a non-blocking toast if `Storage.write` returns `false`
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12, 3.13_
 
-- [ ] 9. Implement `QuickLinks` module pure validation
-  - [ ] 9.1 Implement `QuickLinks.validateLink()`
+- [x] 9. Implement `QuickLinks` module pure validation
+  - [x] 9.1 Implement `QuickLinks.validateLink()`
     - Implement `validateLink(label, url)`: return `{ valid: true }` if `label.trim().length` is 1–50 AND `url` starts with `'http://'` or `'https://'`; otherwise `{ valid: false, reason: '...' }` describing which field failed
     - _Requirements: 4.1, 4.2_
 
@@ -155,8 +155,8 @@ The implementation follows the architecture defined in the design document: a ze
     - Tag comment: `// Feature: personal-dashboard, Property 6: Link URL validation matches the http/https prefix rule`
     - **Validates: Requirements 4.1, 4.2**
 
-- [ ] 10. Implement `QuickLinks` module DOM and `init()`
-  - [ ] 10.1 Implement `QuickLinks.init()`, `addLink()`, `deleteLink()`, and storage flush
+- [x] 10. Implement `QuickLinks` module DOM and `init()`
+  - [x] 10.1 Implement `QuickLinks.init()`, `addLink()`, `deleteLink()`, and storage flush
     - Add DOM markup inside `#links`: `<input id="link-label">`, `<input id="link-url">`, `<button id="link-add">`, `<span id="link-error">`, `<div id="links-panel">`
     - Implement `QuickLinks.state = { links: [] }`
     - Implement `addLink(label, url)`: validate; create `Link` object with `crypto.randomUUID()` or `Date.now()` fallback id; push to `state.links`; flush to `Storage` (within 500 ms per req. 4.5); re-render; retain form field values on validation failure
@@ -166,11 +166,11 @@ The implementation follows the architecture defined in the design document: a ze
     - Display a non-blocking toast if `Storage.write` returns `false`
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7_
 
-- [ ] 11. Checkpoint — TodoList and QuickLinks
+- [x] 11. Checkpoint — TodoList and QuickLinks
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 12. Implement `Theme` module
-  - [ ] 12.1 Implement `Theme.resolveInitialTheme()`, `apply()`, `toggle()`, and `init()`
+- [x] 12. Implement `Theme` module
+  - [x] 12.1 Implement `Theme.resolveInitialTheme()`, `apply()`, `toggle()`, and `init()`
     - Implement `resolveInitialTheme()`: call `Storage.read(KEYS.THEME)`; if `'light'` or `'dark'` return it; else return `'dark'` if `window.matchMedia('(prefers-color-scheme: dark)').matches`, otherwise `'light'`
     - Implement `apply(theme)`: set `document.documentElement.setAttribute('data-theme', theme)`; call `Storage.write(KEYS.THEME, theme)`; update toggle button label/icon; if `Storage.write` returns `false`, show a non-blocking toast
     - Implement `toggle()`: derive opposite of current `data-theme` attribute; call `apply()`
@@ -179,24 +179,24 @@ The implementation follows the architecture defined in the design document: a ze
     - Note: the inline `<script>` in `<head>` (task 1.1) handles the synchronous pre-paint theme application; `Theme.init()` wires the runtime toggle
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6_
 
-- [ ] 13. Wire everything together and polish
-  - [ ] 13.1 Connect Storage failure notices into a shared toast system
+- [x] 13. Wire everything together and polish
+  - [x] 13.1 Connect Storage failure notices into a shared toast system
     - Add a `<div id="toast" class="toast hidden" aria-live="polite">` to `index.html`
     - Implement a shared `showToast(message)` helper function in `app.js` that reveals `#toast` with a message for ~3 seconds then hides it with a CSS transition
     - Update every location in `Storage.write`'s failure path (Greeting, TodoList, QuickLinks, Theme) to call `showToast` instead of inline error rendering
     - _Requirements: 6.4, 3.13, 4.7, 5.6_
 
-  - [ ] 13.2 Add `crypto.randomUUID` fallback for ID generation
+  - [x] 13.2 Add `crypto.randomUUID` fallback for ID generation
     - Add a top-level helper `function generateId() { return (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString() + Math.random().toString(36).slice(2); }`
     - Replace direct `crypto.randomUUID()` calls in `TodoList.createItem` and `QuickLinks.addLink` with `generateId()`
     - _Requirements: 7.4_
 
-  - [ ] 13.3 Verify `file://` and relative-path correctness
+  - [x] 13.3 Verify `file://` and relative-path correctness
     - Audit `index.html`: confirm all `<link>` and `<script>` src/href attributes are relative (no leading `/`)
     - Confirm no `fetch()`, `XMLHttpRequest`, or ES `import` calls exist anywhere in `app.js`
     - _Requirements: 7.1, 7.3, 7.5_
 
-- [ ] 14. Final checkpoint — Full integration
+- [x] 14. Final checkpoint — Full integration
   - Ensure all tests pass, ask the user if questions arise.
 
 ---

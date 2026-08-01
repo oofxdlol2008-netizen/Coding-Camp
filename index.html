@@ -1,95 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Personal Dashboard</title>
-  <!-- Inline script: read pd_theme from localStorage and set data-theme BEFORE css loads -->
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Flash-of-wrong-theme prevention: apply saved theme synchronously before any paint -->
   <script>
-    (function(){
+    (function () {
       try {
-        var t = localStorage.getItem('pd_theme');
-        if(t==='dark') document.documentElement.setAttribute('data-theme','dark');
-      } catch(e) {}
+        var theme = JSON.parse(localStorage.getItem('dashboard_theme'));
+        if (theme === 'dark' || theme === 'light') {
+          document.documentElement.setAttribute('data-theme', theme);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {
+        // localStorage unavailable or JSON parse error — fall through to default light theme
+      }
     })();
   </script>
-  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <header>
-    <section id="greeting-widget" aria-label="Greeting">
-      <h1 id="greeting-text"></h1>
-      <time id="clock-display" aria-label="Current time"></time>
-      <p id="date-display"></p>
-      <button id="edit-name-btn" aria-label="Edit your name">Edit Name</button>
-      <input
-        type="text"
-        id="name-input"
-        aria-label="Enter your name"
-        maxlength="50"
-        hidden
-      >
-      <p id="name-error" role="alert" hidden></p>
-    </section>
-    <button id="theme-toggle" aria-label="Switch to dark mode">Toggle Theme</button>
-  </header>
-
-  <main>
-    <section id="focus-timer" aria-label="Focus Timer">
-      <h2>Focus Timer</h2>
-      <time id="timer-display" aria-label="Timer countdown">25:00</time>
-      <div class="timer-controls">
-        <button id="timer-start" aria-label="Start timer">Start</button>
-        <button id="timer-stop" aria-label="Stop timer" disabled>Stop</button>
-        <button id="timer-reset" aria-label="Reset timer">Reset</button>
-      </div>
+  <main class="dashboard">
+    <!-- Widget 1: Greeting with live clock -->
+    <section id="greeting" class="widget" aria-label="Greeting and clock">
     </section>
 
-    <section id="todo-list" aria-label="To-Do List">
-      <h2>To-Do List</h2>
-      <form id="add-task-form" novalidate>
-        <label for="task-input">New task</label>
-        <input
-          type="text"
-          id="task-input"
-          placeholder="Add a task..."
-          maxlength="500"
-          autocomplete="off"
-        >
-        <button type="submit">Add</button>
-        <p id="task-input-error" role="alert" hidden></p>
-      </form>
-      <ul id="task-list" aria-label="Tasks" aria-live="polite"></ul>
+    <!-- Widget 2: Pomodoro Focus Timer -->
+    <section id="timer" class="widget" aria-label="Pomodoro timer">
     </section>
 
-    <section id="quick-links" aria-label="Quick Links">
-      <h2>Quick Links</h2>
-      <form id="add-link-form" novalidate>
-        <label for="link-label-input">Label</label>
-        <input
-          type="text"
-          id="link-label-input"
-          placeholder="Link label"
-          maxlength="50"
-          autocomplete="off"
-        >
-        <label for="link-url-input">URL</label>
-        <input
-          type="url"
-          id="link-url-input"
-          placeholder="https://example.com"
-          maxlength="2048"
-          autocomplete="off"
-        >
-        <button type="submit">Add Link</button>
-        <p id="link-input-error" role="alert" hidden></p>
-      </form>
-      <div id="links-list" aria-label="Quick links" aria-live="polite"></div>
+    <!-- Widget 3: To-Do List -->
+    <section id="todo" class="widget" aria-label="To-do list">
+    </section>
+
+    <!-- Widget 4: Quick Links -->
+    <section id="links" class="widget" aria-label="Quick links">
+    </section>
+
+    <!-- Widget 5: Theme Toggle -->
+    <section id="theme-toggle" class="widget" aria-label="Theme toggle">
     </section>
   </main>
 
-  <div id="toast-container" role="status" aria-live="polite"></div>
-
-  <script src="js/app.js"></script>
+  <script src="js/app.js" defer></script>
+  <div id="toast" class="toast hidden" aria-live="polite" role="status"></div>
 </body>
 </html>
